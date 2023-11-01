@@ -54,8 +54,8 @@ To export your Telegram chat history, follow these steps:
 Clone this repository to your local machine and navigate to the repository directory.
 
 ```bash
-git clone https://github.com/yourusername/telegram-data-analyzer.git
-cd telegram-data-analyzer
+git clone https://github.com/Yash-Kavaiya/telegram-url-scraper
+cd telegram-url-scraper
 ```
 
 ## Usage
@@ -65,7 +65,7 @@ cd telegram-data-analyzer
 To extract text messages from the exported Telegram data and create a word cloud, run the following command:
 
 ```bash
-python extract_text_and_create_wordcloud.py -i path/to/your/result.json
+python app.py -i result.json
 ```
 
 Replace `path/to/your/result.json` with the path to your exported Telegram chat history JSON file. This command will generate a word cloud image based on the text messages found in the chat history.
@@ -75,7 +75,7 @@ Replace `path/to/your/result.json` with the path to your exported Telegram chat 
 To extract all available URLs from the Telegram data and generate a CSV file, run the following command:
 
 ```bash
-python extract_urls_and_create_csv.py -i path/to/your/result.json -o path/to/output/urls.csv
+python main.py -i path/to/your/result.json -o path/to/output/urls.csv
 ```
 
 Replace `path/to/your/result.json` with the path to your exported Telegram chat history JSON file, and `path/to/output/urls.csv` with the desired location for the CSV output.
