@@ -2,16 +2,14 @@
 
 # Telegram url scraper
 
-This repository provides a set of tools to analyze your Telegram chat history. You can use this tool to export your Telegram user, group, or chat history in JSON format, extract text messages, and create a word cloud. Additionally, it can help you extract all available URLs in Telegram and generate a CSV file for further analysis.
+This repository provides a set of tools to extract urls your Telegram chat history. You can use this tool to export your Telegram user, group, or chat history in JSON format, extract text messages, and  it can help you extract all available URLs in Telegram and generate a CSV file for further analysis.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Exporting Telegram Data](#exporting-telegram-data)
-  - [Analyzing Telegram Data](#analyzing-telegram-data)
 - [Usage](#usage)
-  - [Extracting Text Messages and Creating Word Cloud](#extracting-text-messages-and-creating-word-cloud)
   - [Extracting URLs and Creating a CSV](#extracting-urls-and-creating-a-csv)
 - [Contributing](#contributing)
 - [License](#license)
@@ -23,15 +21,7 @@ Before using this tool, ensure you have the following installed on your system:
 - [Telegram Desktop](https://desktop.telegram.org/)
 - [Python](https://www.python.org/) (version 3.7 or higher)
 - The required Python packages (you can install them using `pip`):
-  - `telethon` for accessing Telegram data.
-  - `wordcloud` for generating word clouds.
   - `pandas` for handling data and creating CSV files.
-
-You can install the Python packages using the following command:
-
-```bash
-pip install telethon wordcloud pandas
-```
 
 ## Getting Started
 
@@ -60,7 +50,7 @@ cd telegram-url-scraper
 
 ## Usage
 
-### Extracting Text Messages and Creating Word Cloud
+### Extracting urls
 
 To extract text messages from the exported Telegram data and create a word cloud, run the following command:
 
@@ -70,19 +60,9 @@ python app.py -i result.json
 
 Replace `path/to/your/result.json` with the path to your exported Telegram chat history JSON file. This command will generate a word cloud image based on the text messages found in the chat history.
 
-### Extracting URLs and Creating a CSV
-
-To extract all available URLs from the Telegram data and generate a CSV file, run the following command:
-
-```bash
-python main.py -i path/to/your/result.json -o path/to/output/urls.csv
-```
-
-Replace `path/to/your/result.json` with the path to your exported Telegram chat history JSON file, and `path/to/output/urls.csv` with the desired location for the CSV output.
-
 ## Contributing
 
-If you have improvements or additional features to add to this project, feel free to contribute. Please follow the standard GitHub Fork and Pull Request workflow.
+If you have improvements or additional features to add to this project, feel free to contribute. Please follow the standard GitHub Fork and Pull Request.
 
 ## License
 
