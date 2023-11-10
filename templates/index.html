@@ -1,28 +1,44 @@
-<!-- FILEPATH: /workspaces/telegram-url-scraper/templates/index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Upload JSON File</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Upload JSON File</h1>
-        <form>
-            <div class="form-group">
-                <label for="jsonFile">Select JSON File:</label>
-                <input type="file" class="form-control-file" id="jsonFile">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <!-- Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-5">
+        <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-xl">
+            <div class="md:flex">
+                <div class="w-full px-4 py-5">
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-gray-900">URL Scraper from JSON file </h1>
+                        <p>Upload your JSON file, and gain insights into the URLs present in the data. Easily visualize and download the URLs in a clean,
+                             organized format. Simplify your URL extraction process with the URL Scraper Dashboard.</p>
+                        <p class="text-gray-600 mt-2">Please select a JSON file to upload.</p>
+                    </div>
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-bold mb-2" for="jsonFile">
+                                Select JSON File:
+                            </label>
+                            <!-- Set the name attribute to 'file' -->
+                            <input type="file" class="form-control-file" id="jsonFile" name="file">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+    </div>
 </body>
 </html>

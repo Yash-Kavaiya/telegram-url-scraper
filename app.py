@@ -18,11 +18,30 @@ def upload():
     df.to_csv('result.csv', columns=['text'], index=False)
     urls = []
     for text in df['text']:
-        urls.extend(re.findall(r'https?://\S+', text))
+        if isinstance(text, list):
+            # If 'text' is a list, iterate over its elements
+            for item in text:
+                if isinstance(item, dict):
+                    # If 'item' is a dictionary, extract values and apply regex
+                    for value in item.values():
+                        urls.extend(re.findall(r'https?://\S+', str(value)))
+                else:
+                    # If 'item' is not a dictionary, apply the regular expression directly
+                    urls.extend(re.findall(r'https?://\S+', str(item)))
+        elif isinstance(text, dict):
+            # If 'text' is a dictionary, extract values and apply regex
+            for value in text.values():
+                urls.extend(re.findall(r'https?://\S+', str(value)))
+        else:
+            # If 'text' is not a list or dictionary, apply the regular expression directly
+            urls.extend(re.findall(r'https?://\S+', str(text)))
+
     url_df = pd.DataFrame(urls, columns=['urls'])
     url_df['urls'] = url_df['urls'].str.replace(r'[}{",]', '', regex=True)
-    url_df.to_csv('urls.csv', index=False)
-    return render_template('download.html')
+    
+    url_list = url_df['urls'].tolist()
+    
+    return render_template('download.html', urls=url_list)
 
 @app.route('/download_result')
 def download_result():
