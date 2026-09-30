@@ -146,6 +146,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Generated Telegram exports and scraper output
+result.json
+result.csv
+urls.csv
+output/
+
 # pytype static type analyzer
 .pytype/
 
