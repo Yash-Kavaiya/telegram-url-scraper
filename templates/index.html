@@ -2,44 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload JSON File</title>
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Telegram URL Scraper</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-5">
-        <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-xl">
-            <div class="md:flex">
-                <div class="w-full px-4 py-5">
-                    <div class="mb-6">
-                        <h1 class="text-2xl font-bold text-gray-900">URL Scraper from JSON file </h1>
-                        <p>Upload your JSON file, and gain insights into the URLs present in the data. Easily visualize and download the URLs in a clean,
-                             organized format. Simplify your URL extraction process with the URL Scraper Dashboard.</p>
-                        <p class="text-gray-600 mt-2">Please select a JSON file to upload.</p>
-                    </div>
-                    <form action="/upload" method="post" enctype="multipart/form-data">
-                        <div class="mb-4">
-                            <label class="block text-gray-700 font-bold mb-2" for="jsonFile">
-                                Select JSON File:
-                            </label>
-                            <!-- Set the name attribute to 'file' -->
-                            <input type="file" class="form-control-file" id="jsonFile" name="file">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-                    <a href="https://github.com/Yash-Kavaiya/telegram-url-scraper">https://github.com/Yash-Kavaiya/telegram-url-scraper</a>
-                </div>
-            
-            </div>
+<body class="bg-gray-100 text-gray-900">
+    <div class="max-w-xl mx-auto mt-10 bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-2">Telegram URL Scraper</h1>
+        <p class="text-gray-600 mb-4">
+            Upload a Telegram Desktop chat export (<span class="font-medium">JSON</span>).
+            The app lists the URLs it finds and lets you download a messages CSV and a URLs CSV.
+        </p>
+        {% if error %}
+        <div class="bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded mb-4" role="alert">
+            {{ error }}
         </div>
+        {% endif %}
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <label class="block font-medium mb-2" for="jsonFile">JSON file</label>
+            <input id="jsonFile" class="block w-full mb-4" type="file" name="file" accept=".json,application/json" required>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded" type="submit">
+                Extract URLs
+            </button>
+        </form>
+        <p class="text-sm text-gray-500 mt-6">
+            <a class="text-blue-700 underline" href="https://github.com/Yash-Kavaiya/telegram-url-scraper">Source on GitHub</a>
+        </p>
     </div>
 </body>
 </html>
