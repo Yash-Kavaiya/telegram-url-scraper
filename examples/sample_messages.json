@@ -1,0 +1,48 @@
+{
+  "name": "Sample export",
+  "type": "private_supergroup",
+  "id": 1001,
+  "messages": [
+    {
+      "id": 1,
+      "type": "message",
+      "date": "2024-05-01T12:00:00",
+      "from": "Ada",
+      "text": "Plain link https://example.com/notes and the same https://example.com/notes"
+    },
+    {
+      "id": 2,
+      "type": "message",
+      "date": "2024-05-01T12:05:00",
+      "from": "Grace",
+      "text": [
+        "Read ",
+        {
+          "type": "text_link",
+          "text": "the guide",
+          "href": "https://docs.example.com/guide"
+        },
+        " or open ",
+        {
+          "type": "link",
+          "text": "https://example.com/plain},\""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "message",
+      "date": "2024-05-01T12:06:00",
+      "from": "Ada",
+      "text": "Repeat https://docs.example.com/guide later"
+    },
+    {
+      "id": 4,
+      "type": "service",
+      "date": "2024-05-01T12:07:00",
+      "actor": "Ada",
+      "action": "invite_members",
+      "text": ""
+    }
+  ]
+}

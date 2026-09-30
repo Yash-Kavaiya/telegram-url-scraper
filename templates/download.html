@@ -2,40 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>URLs Download Page</title>
-    <!-- Bootstrap CSS (you may need to adjust the CDN links based on your preferred version) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Extracted URLs</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
-        <h1>URLs Contents</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <!-- Add your column headers based on your DataFrame structure -->
-                    <th>URL</th>
-                    <!-- Add more headers if needed -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for url in urls %}
+<body class="bg-gray-100 text-gray-900">
+    <div class="max-w-3xl mx-auto mt-10 bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-2">Extracted URLs</h1>
+        <p class="text-gray-600 mb-4">
+            {{ message_count }} messages processed, {{ url_count }} unique URL{% if url_count != 1 %}s{% endif %}.
+        </p>
+        <div class="flex flex-wrap gap-3 mb-6">
+            <a class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded" href="{{ url_for('download_urls') }}">Download URLs CSV</a>
+            <a class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-4 rounded" href="{{ url_for('download_result') }}">Download messages CSV</a>
+            <a class="py-2 px-4 underline text-blue-700" href="{{ url_for('home') }}">Upload another file</a>
+        </div>
+        {% if urls %}
+        <div class="overflow-x-auto border rounded">
+            <table class="min-w-full text-left">
+                <thead class="bg-gray-50">
                     <tr>
-                        <!-- Display each URL in a row -->
-                        <td><a href="{{ url }}">{{ url }}</a></td>
-                        <!-- Add more cells if needed -->
+                        <th class="px-3 py-2 border-b">URL</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="https://github.com/Yash-Kavaiya/telegram-url-scraper">https://github.com/Yash-Kavaiya/telegram-url-scraper</a>
-        <!-- Download link for the CSV file -->
-        <a href="{{ url_for('download_urls') }}" class="btn btn-primary">Download URLs CSV</a>
-
+                </thead>
+                <tbody>
+                    {% for url in urls %}
+                    <tr>
+                        <td class="px-3 py-2 border-b break-all"><a class="text-blue-700 underline" href="{{ url }}">{{ url }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-gray-600">No URLs found in this export. You can still download the messages CSV.</p>
+        {% endif %}
     </div>
-
-    <!-- Bootstrap JS (you may need to adjust the CDN links based on your preferred version) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

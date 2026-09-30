@@ -1,0 +1,10 @@
+.git
+.venv
+venv
+__pycache__
+.pytest_cache
+output
+result.json
+result.csv
+urls.csv
+demo.ipynb

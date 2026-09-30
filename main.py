@@ -1,31 +1,75 @@
-import json
-import pandas as pd
-import re
+#!/usr/bin/env python3
+"""Extract messages and URLs from a Telegram Desktop JSON export."""
 
-with open('result.json', 'r') as f:
-    data = json.load(f)
-df = pd.DataFrame(data)
-text=[]
-for i in df.messages:
-    text.append(i['text'])
-print(len(text))
-df = pd.DataFrame(data['messages']) 
-df = df[df['text'].str.len() > 6]
-df.to_csv('result.csv', columns=['text'], index=False)
-import time
-time.sleep(5)
-df = pd.read_csv('result.csv')
-url_pattern = r'https?://\S+'
-def extract_urls(text):
-    urls = re.findall(url_pattern, text)
-    return [url.replace('}', '').replace("'", "") for url in urls]
-df['urls'] = df['text'].apply(extract_urls)
-all_urls = [url for url_list in df['urls'] for url in url_list]
-url_l=[]
-for url in all_urls:
-    print(url)
-    url_l.append(url)
-url_df = pd.DataFrame(url_l, columns=['urls'])
-url_df['urls'] = url_df['urls'].str.replace(r'[}{",]', '', regex=True)
-url_df.to_csv('urls.csv', index=False)
+from __future__ import annotations
 
+import argparse
+import sys
+from pathlib import Path
+
+from telegram_url_scraper.csv_export import write_csvs
+from telegram_url_scraper.extractor import ExportError, extract_from_export, load_export
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Extract messages and URLs from a Telegram Desktop JSON export."
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        required=True,
+        help="Path to a Telegram Desktop JSON export",
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        default=".",
+        help="Directory for result.csv and urls.csv (default: current directory)",
+    )
+    parser.add_argument(
+        "--messages",
+        help="Write the messages CSV to this path instead of <output-dir>/result.csv",
+    )
+    parser.add_argument(
+        "--urls",
+        help="Write the URLs CSV to this path instead of <output-dir>/urls.csv",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print each extracted URL",
+    )
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        result = extract_from_export(load_export(args.input))
+    except ExportError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+
+    output_dir = Path(args.output_dir)
+    messages_path = Path(args.messages) if args.messages else output_dir / "result.csv"
+    urls_path = Path(args.urls) if args.urls else output_dir / "urls.csv"
+    try:
+        output_dir.mkdir(parents=True, exist_ok=True)
+        messages_path.parent.mkdir(parents=True, exist_ok=True)
+        urls_path.parent.mkdir(parents=True, exist_ok=True)
+        write_csvs(result, messages_path, urls_path)
+    except OSError as exc:
+        print(f"Could not write output: {exc}", file=sys.stderr)
+        return 1
+
+    if args.verbose:
+        for url in result.urls:
+            print(url)
+    print(f"Wrote {len(result.messages)} messages to {messages_path}")
+    print(f"Wrote {len(result.urls)} URLs to {urls_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
